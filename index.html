@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link type="text/css" relation="stylesheet" src="style.css">
+    <style>
+      .app-container {
+        height: 100vh;
+        width: 100%;
+      }
+      .complete {
+        text-decoration: line-through;
+      }
+
+.main-container{
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    
+}
+.Savebtn{
+    background-color: rgb(14, 152, 216);
+    text-align: center;
+    color: white;
+    border-radius: 10%;
+    border: none;
+    box-shadow: none;
+    height: 30px;
+    width: 70px;
+}
+.Savebtn:hover{
+background-color: rgb(11, 158, 11);
+
+}
+.Savebtn-green{
+    background-color: rgb(68, 235, 68);
+    text-align: center;
+    color: white;
+    border-radius: 10%;
+    border: none;
+    height: 30px;
+    width: 70px;
+
+}
+.Savebtn-red{
+    background-color: rgb(250, 91, 91);
+    text-align: center;
+    color: white;
+    border-radius: 10%;
+    border: none;
+    height: 30px;
+    width: 70px;
+}
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.table{
+    margin: 2px;
+    border: 10px;
+    border-color: black;
+    border-radius: 5%;
+}
+tr{
+    height: 20px;
+    width: 100px;
+}
+th{
+    height: 20px;
+    width: 150px;
+    border: 1px solid black;
+    margin: 0;
+
+}
+td{
+    border: 1px solid black;
+    height: 20px;
+    width: 150px;
+    margin: 0;
+}
+#myTable{
+    border: 1px solid black;
+}
+#formInput{
+    width: 550px;
+    height: 30px;
+    background-color: white;
+    border: 0.5px solid black;
+    border-radius: 2%;
+    margin-right: 5px;
+    
+}
+/* .table{
+    word-wrap: break-word;
+    min-width: 160px;
+    max-width: 160px
+} */
+
+    </style>
+  </head>
+  <body>
+      <center>
+    <div
+      class="main-container"
+    >
+
+      <h3 style="text-align: center;">Todo App</h3>
+      <h3 class="count"></h3>
+      <div class="box">
+        <div>
+          <input
+            type="text"
+            id="formInput"
+            placeholder="Enter a task here"
+          />
+        </div>
+        <button
+          type="button"
+          class="Savebtn"
+        >
+          Save
+        </button>
+        
+      </div>
+
+      <div class="table">
+        <table id="myTable">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Todo item</th>
+              <th>status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </center>
+    <script>
+        var input = document.querySelector('#formInput');
+        var myTable = document.getElementById("myTable");
+
+document.querySelector('.Savebtn').addEventListener('click', ()=> {
+        var currentIndex = myTable.rows.length;
+        //var count=currentIndex;
+        document.querySelector('.count').innerHTML=`${currentIndex} Item`;
+        var task = input.value;
+        let template =`
+                        <tr>
+                            <td>${currentIndex}</td>
+                            <td>${task}</td>
+                            <td>"Pending"</td>
+                            <td>
+                                <button class="Savebtn-red" >
+                                    Delete
+                                </button>
+                                <button class="Savebtn-green" >
+                                    Finished
+                                </button>
+                            </td>
+                        </tr>`;
+        myTable.innerHTML +=template;
+
+  });
+
+  myTable.addEventListener('click',(e)=>{
+        if(!e.target.classList.contains('Savebtn-red'))
+        {
+            return;
+        }
+        const btn = e.target;
+        btn.closest('tr').remove();
+
+  })
+
+  myTable.addEventListener('click',(e)=>{
+    if(!e.target.classList.contains('Savebtn-green'))
+    {
+        return;
+    }
+    const btn = e.target;
+    btn.closest('tr').style.backgroundColor = "#D0F0C0";
+    btn.closest('tr').cells[2].innerText = "Completed";
+    var taskDone = btn.closest('tr').cells[1].innerText;
+    btn.closest('tr').cells[1].innerHTML = `<strike>${taskDone}</strike>`;
+    
+})
+
+    </script>
+  </body>
+</html>
